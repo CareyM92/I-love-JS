@@ -1,0 +1,59 @@
+table{
+    color: #fff;
+    text-align: center;
+    border-collapse: collapse;
+    font: normal 3em Arial, Helvetica, sans-serif;
+}
+
+tr{
+    height: 16.02vh;
+    background-color: #4d5058;
+    box-shadow: inset 0 2px 8px #a5aca7; /* Creates a pressed-in effect */
+}
+
+td{
+    width: 25vw;
+    border: 4px double #e9ecea;
+}
+
+#inputBox{
+    width: 100%;
+    text-align: right;
+    font-size: 1.5em;
+    color: #fff;
+    background-color: #F2B55A;
+    border: 4px double #e9ecea;
+}
+
+.digitButton:active{
+    background-color: #4d5058;
+    color: #80ffaa;
+    border: 4px double #e9ecea; 
+    box-shadow: inset 0 2px 8px #6fe897; 
+}
+
+.operatorButton:active{
+    background-color: #4d5058;
+    color: #80ffaa;
+    border: 4px double #e9ecea; 
+    box-shadow: inset 0 2px 8px #6fe897; 
+}
+
+#equalButton:active{
+    background-color: #1b7806;
+    color: #80ffaa;
+    border-left: none !important;
+    border: 4px double #e9ecea; 
+    box-shadow: inset 0 2px 8px #6fe897; 
+}
+
+.backspaceButton {
+    background-color: #F2B55A;
+    border-left: 4px double #e9ecea; 
+}
+
+.ACButton {
+    background-color: #F2B55A;
+    border-right: 4px double #e9ecea; 
+}
+

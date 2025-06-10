@@ -1,0 +1,153 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <table border = "1">            
+            <tr>
+                <td colspan="4">
+                    <input type="text" id="inputBox" value="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td class = "ACButton" onclick = "btnACPressed ()">AC</td>
+                <td class = "backspaceButton" onclick="backspaceBtnPressed()">⌫</td>
+                <td class = "operatorButton" onclick = "percentageBtnPressed ()">%</td>
+                <td class = "operatorButton" onclick = "operatorBtnPressed ('÷')">÷</td>
+            </tr>
+            <tr>
+                <td class = "digitButton" onclick="digitBtnPressed (7)">7</td>
+                <td class = "digitButton" onclick="digitBtnPressed (8)">8</td>
+                <td class = "digitButton" onclick="digitBtnPressed (9)">9</td>
+                <td class = "operatorButton" onclick="operatorBtnPressed ('*')">x</td>
+            </tr>
+            <tr>
+                <td class = "digitButton" onclick="digitBtnPressed (4)">4</td>
+                <td class = "digitButton" onclick="digitBtnPressed (5)">5</td>
+                <td class = "digitButton" onclick="digitBtnPressed (6)">6</td>
+                <td class = "operatorButton" onclick="operatorBtnPressed ('-')">-</td>
+            </tr>
+            <tr>
+                <td class = "digitButton" onclick="digitBtnPressed (1)">1</td>
+                <td class = "digitButton" onclick="digitBtnPressed (2)">2</td>
+                <td class = "digitButton" onclick="digitBtnPressed (3)">3</td>
+                <td class = "operatorButton" onclick="operatorBtnPressed ('+')">+</td>
+            </tr>
+            <tr>
+                <td class = "operatorButton" onclick = "decimalBtnPressed ()">.</td>
+                <td class = "digitButton" onclick = "digitBtnPressed (0)">0</td>
+                <td id = "equalButton" class = "operatorButton" colspan = "2" onclick="equalsBtnPressed()">=</td>
+            </tr>
+        </table>
+    </body>
+
+    <script>
+        var newLine = true;     //Boolean variable. Determines if the next thing the user types should be on a newline.
+        var value1;
+        var currentOperator;
+
+        //Event handler for when the user clicks a digit button. 
+        function digitBtnPressed(button) {
+
+            if (newLine) {
+                document.getElementById("inputBox").value = button;
+                newLine = false;          
+            }   else {
+                    var currentValue = document.getElementById("inputBox").value;
+                    document.getElementById("inputBox").value = currentValue + button;
+                }
+        }
+
+        //Event handler for when the user clicks the AC button. 
+        function btnACPressed() {
+            document.getElementById("inputBox").value = "0";
+            newLine = true;
+        }
+
+        //Event handler for when the user clicks an operator button.
+        function operatorBtnPressed(operator) {
+            var inputBox = document.getElementById("inputBox");
+            var currentValue = parseFloat(inputBox.value);
+
+            if (currentOperator && !newLine) {
+                // Perform the previous operation
+                switch(currentOperator) {
+                    case "+": value1 = value1 + currentValue; break;
+                    case "-": value1 = value1 - currentValue; break;
+                    case "*": value1 = value1 * currentValue; break;
+                    case "÷": value1 = value1 / currentValue; break;
+             }
+            inputBox.value = value1;
+        } else {
+            value1 = currentValue;
+        }
+        
+        currentOperator = operator;
+        newLine = true;
+        }
+
+        //Event handler for when the user clicks the equals button. 
+        function equalsBtnPressed() {
+            var value2 = parseFloat(document.getElementById("inputBox").value);
+            var finalTotal;
+
+            switch(currentOperator) {
+                case "+":
+                    finalTotal = value1 + value2;
+                    break;
+                case "-":
+                    finalTotal = value1 - value2;
+                    break;
+                case "*":
+                    finalTotal = value1 * value2;
+                    break;
+                case "÷":
+                    finalTotal = value1 / value2;
+                    break;
+            }
+            document.getElementById("inputBox").value = finalTotal;
+            value1 = 0; // Reset value1 for the next calculation
+            newLine = true; // Set newLine to true so that the next input will be on a new line.
+        }
+
+        //Event handler for when the user clicks the decimal point button.
+        function decimalBtnPressed() {
+            var inputBox = document.getElementById("inputBox");
+            var currentValue = inputBox.value;
+            if (newLine) {
+                inputBox.value = "0.";
+                newLine = false;
+            } else if (!currentValue.includes('.')) {
+                inputBox.value = currentValue + '.';
+            }
+        }
+
+        // Event handler for when the user clicks the percentage button.
+        function percentageBtnPressed() {
+            var inputBox = document.getElementById("inputBox");
+            var currentValue = parseFloat(inputBox.value);
+            if (!isNaN(currentValue)) {
+                if(currentOperator && value1!==undefined){
+                    // Calculate percentage based on value1
+                    inputBox.value = (value1 * currentValue) / 100;
+                } else{
+                    // Standalone percentage
+                    inputBox.value = currentValue / 100;
+                }
+                newLine = true; // Set newLine to true so that the next input will be on a new line.
+            }
+        }
+        //Event handler for when the user clicks the backspace button.
+        function backspaceBtnPressed() {
+            var inputBox = document.getElementById("inputBox");
+            var currentValue = inputBox.value;
+            if (currentValue.length > 1) {
+            inputBox.value = currentValue.slice(0, -1);
+            } else {
+            inputBox.value = "0";
+            newLine = true;
+            }
+        } 
+    </script>
+</html>
